@@ -20,10 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 
 Route::prefix('v1')->group(function() {
     
@@ -56,12 +52,16 @@ Route::prefix('v1')->group(function() {
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                     ->middleware('auth')
                     ->name('logout');
-            });
 
-            Route::get('plans',[PlansController::class,'index']);
-        Route::middleware('auth:sanctum')->group(function() {
+        Route::get('/user', [RegisteredUserController::class, 'user'])
+        ->middleware('auth')
+        ->name('logout');
+    });
+
             
-            Route::post('plans/{id}',[PlansController::class,'initiate_transaction']);
-        });
+    Route::middleware('auth:sanctum')->group(function() {
+        Route::get('plans',[PlansController::class,'index']);
+        Route::post('plans/{id}',[PlansController::class,'initiate_transaction']);
+    });
 
 });

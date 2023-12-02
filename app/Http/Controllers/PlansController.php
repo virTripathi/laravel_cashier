@@ -56,49 +56,34 @@ class PlansController extends Controller
         return view("subscription_success");
     }
 
-    public function handle_and_update_subscriptions(Request $request)
-{
-    $endpoint_secret = env('STRIPE_WEBHOOK_SECRET');
+    public function handle_and_update_subscriptions(Request $request) {
 
-    \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        $endpoint_secret = env('STRIPE_WEBHOOK_SECRET');
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
-    $payload = $request->getContent();
-    $sig_header = $request->header('Stripe-Signature');
-    $event = null;
+        $payload = $request->getContent();
+        $sig_header = $request->header('Stripe-Signature');
+        $event = null;
 
-    try {
-        $event = \Stripe\Webhook::constructEvent(
-            $payload, $sig_header, $endpoint_secret
-        );
-    } catch (\UnexpectedValueException $e) {
-        // Invalid payload
-        return response('Invalid payload', 400);
-    } catch (\Stripe\Exception\SignatureVerificationException $e) {
-        // Invalid signature
-        return response('Invalid signature', 400);
+        try {
+            $event = \Stripe\Webhook::constructEvent(
+                $payload, $sig_header, $endpoint_secret
+            );
+        } catch (\UnexpectedValueException $e) {
+            return response('Invalid payload', 400);
+        } catch (\Stripe\Exception\SignatureVerificationException $e) {
+            return response('Invalid signature', 400);
+        } 
+        switch ($event->type) {
+            case 'checkout.session.completed':
+                $session = $event->data->object;
+                $user = User::where('stripe_session_id', $session->id)->first();
+                break;
+
+            default:
+                return response('Unexpected event type', 400);
+        }
+
+        return response('Webhook Handled', 200);
     }
-
-    // Handle the event
-    switch ($event->type) {
-        case 'checkout.session.completed':
-            $session = $event->data->object; // contains a \Stripe\Checkout\Session
-
-            // Fetch the user based on the session
-            $user = User::where('stripe_session_id', $session->id)->first();
-
-            // Update your subscriptions and users table accordingly
-            // For example, you might update the user's subscription status
-            // and store the subscription ID in your database
-
-            break;
-
-        // Handle other events as needed
-
-        default:
-            // Unexpected event type
-            return response('Unexpected event type', 400);
-    }
-
-    return response('Webhook Handled', 200);
-}
 }

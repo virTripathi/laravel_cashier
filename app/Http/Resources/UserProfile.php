@@ -16,12 +16,12 @@ class UserProfile extends JsonResource
     {
         return $this->only([
             'id',
-            'name',
+            'full_name',
             'mobile_number',
             'email',
             'role_id',
             'occupation',
-            'image',
+            'profile_photo',
             'gender',
             'city',
             'state',

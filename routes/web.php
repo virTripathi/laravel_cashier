@@ -16,8 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function() {         
     Route::get('plan/{id}',[PlansController::class,'initiate_transaction']);
     Route::get('stripe/webhook',[PlansController::class,'handle_and_update_subscriptions']);
-    Route::get('a_plan',[PlansController::class,'initiate_transaction'])->name('success');
-    Route::get('b_plan',[PlansController::class,'initiate_transaction'])->name('checkout');
 });
 
 

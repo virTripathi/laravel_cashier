@@ -35,17 +35,6 @@ class RegisteredUserController extends Controller
             'profile_photo' => ['nullable','file'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-        if ($request->hasFile('profile_photo')) {
-            try {
-                $profilePhoto = $request->file('profile_photo');
-                $profilePhotoPath = $profilePhoto->store('profile_photos', 'public'); // Adjust the storage path as needed
-                $insert_array['profile_photo'] = $profilePhotoPath;
-            } catch(\Exception $e) {
-                return $this->error('Unable to Upload File: '.$e->getMessage(),'Error',500);
-            }
-            
-        }
-
         $insert_array = [];
         $insert_array['full_name'] = $request->full_name;
         $insert_array['email'] = $request->email;
@@ -55,9 +44,16 @@ class RegisteredUserController extends Controller
         $insert_array['state'] = $request->state;
         $insert_array['country'] = $request->country;
         $insert_array['gender'] = $request->gender;
-        $insert_array['profile_photo'] = $request->profile_photo;
+        if ($request->hasFile('profile_photo')) {
+            try {
+                $profilePhoto = $request->file('profile_photo');
+                $profilePhotoPath = $profilePhoto->store('profile_photos', 'public');
+                $insert_array['profile_photo'] = asset('storage/' . $profilePhotoPath);
+            } catch(\Exception $e) {
+                return $this->error('Unable to Upload File: '.$e->getMessage(),'Error',500);
+            }
+        }
         $insert_array['password'] = Hash::make($request->password);
-
         $user = User::create($insert_array);
         $stripeCustomer = $user->createAsStripeCustomer();
 
@@ -66,5 +62,9 @@ class RegisteredUserController extends Controller
         Auth::login($user);
         $userProfile = new UserProfile($user);
         return $this->success($userProfile,'OK',201);
+    }
+
+    public function user(Request $request) {
+        return new UserProfile(Auth::user());
     }
 }
