@@ -1,0 +1,96 @@
+<div class="relative top-0 bottom-0 left-0 right-0 flex flex-col justify-center items-center m-4">
+    <div class="w-full md:w-11/12">
+    <mat-card>
+        <mat-card-header class="mb-4">
+            <mat-card-title>Register</mat-card-title>
+            <mat-card-subtitle>Begin Your Journey With LetsCode Today</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="mb-4">
+            <form [formGroup]="registrationForm" (ngSubmit)="register()" enctype="multipart/form-data">
+                <div class="grid grid-cols-6 gap-4">
+                    <mat-form-field class="!block col-span-3 md:col-span-2">
+                        <mat-label>Full Name</mat-label>
+                        <input formControlName="full_name" matInput placeholder="Enter Your Full Name">
+                        <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['full_name']?.touched && formControls?.['full_name']?.hasError('required')">Full Name is required</mat-hint>
+                        <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['full_name']?.touched && formControls?.['full_name']?.hasError('minlength')">Full Name must be atleast 3 characters long</mat-hint>
+                        <mat-hint class="text-sm text-red-400" *ngIf="serverErrors?.full_name">{{serverErrors?.full_name[0]}}</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field class="!block col-span-3 md:col-span-2">
+                        <mat-label>Email</mat-label>
+                        <input formControlName="email" matInput placeholder="Enter Your Registered Email">
+                        <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['email']?.touched && formControls?.['email']?.hasError('required')">Email is required</mat-hint>
+                        <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['email']?.touched && formControls?.['email']?.hasError('email')">Email Must Be A Valid Email</mat-hint>
+                        <mat-hint class="text-sm text-red-400" *ngIf="serverErrors?.email">{{serverErrors?.email[0]}}</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field class="!block col-span-3 md:col-span-2">
+                        <mat-label>Mobile Number</mat-label>
+                        <input formControlName="mobile_number" matInput placeholder="Enter Your 10 Digits Mobile Number">
+                        <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['mobile_number']?.touched && formControls?.['mobile_number']?.hasError('required')">Mobile Number is required</mat-hint>
+                        <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['mobile_number']?.touched && formControls?.['mobile_number']?.hasError('minlength')">Mobile Number must be of 10 digits</mat-hint>
+                        <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['mobile_number']?.touched && formControls?.['mobile_number']?.hasError('maxLength')">Mobile Number must be of 10 digits</mat-hint>
+                        <mat-hint class="text-sm text-red-400" *ngIf="serverErrors?.mobile_number">{{serverErrors?.mobile_number[0]}}</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field class="!block col-span-3 md:col-span-2">
+                        <mat-label>Occupation</mat-label>
+                        <input formControlName="occupation" matInput placeholder="Enter Your Current Job Title/Educational Degree">
+                        <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['occupation']?.touched && formControls?.['occupation']?.hasError('minlength')">Occupation must be of atleast three characters</mat-hint>
+                        <mat-hint class="text-sm text-red-400" *ngIf="serverErrors?.occupation">{{serverErrors?.occupation[0]}}</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field class="!block col-span-3 md:col-span-2">
+                        <mat-label>City</mat-label>
+                        <input formControlName="city" matInput placeholder="Please Enter Your City">
+                        <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['city']?.touched && formControls?.['city']?.hasError('minlength')">Plese Enter A Valid City</mat-hint>
+                        <mat-hint class="text-sm text-red-400" *ngIf="serverErrors?.city">{{serverErrors?.city[0]}}</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field class="!block col-span-3 md:col-span-2">
+                        <mat-label>State</mat-label>
+                        <input formControlName="state" matInput placeholder="Please Enter Your State">
+                        <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['state']?.touched && formControls?.['state']?.hasError('minlength')">Plese Enter A Valid State</mat-hint>
+                        <mat-hint class="text-sm text-red-400" *ngIf="serverErrors?.state">{{serverErrors?.state[0]}}</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field class="!block col-span-3 md:col-span-2">
+                        <mat-label>Country</mat-label>
+                        <input formControlName="country" matInput placeholder="Please Enter Your Country">
+                        <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['country']?.touched && formControls?.['country']?.hasError('minlength')">Plese Enter A Valid Country</mat-hint>
+                        <mat-hint class="text-sm text-red-400" *ngIf="serverErrors?.country">{{serverErrors?.country[0]}}</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field class="!block col-span-3 md:col-span-2">
+                        <mat-label>Gender</mat-label>
+                        <mat-select formControlName="gender">
+                            <mat-option value="">Choose Your Gender</mat-option>
+                            <mat-option value="1">Male</mat-option>
+                            <mat-option value="2">Female</mat-option>
+                            <mat-option value="3">I Don't Want To Specify</mat-option>
+                            <mat-option value="4">Other</mat-option>
+                        </mat-select>
+                        <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['gender']?.touched && formControls?.['gender']?.hasError('min')">Please Select A Valid Option From The Given Dropdown.</mat-hint>
+                        <mat-hint class="text-sm text-red-400" *ngIf="serverErrors?.gender">{{serverErrors?.gender[0]}}</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field class="!block col-span-6 md:col-span-2">
+                        <mat-label>Image</mat-label>
+                        <input (click)="openFileDrawer()" matInput placeholder="Select Your Profile Photo" #profilePlaceholder>
+                        <input hidden formControlName="profile_photo" (change)="updatePlaceHolder($event)" type="file" class="absolute top-0 left-0 right-0 bottom-0" id="" #profile>
+                        <mat-hint class="text-sm text-red-400" *ngIf="serverErrors?.profile_photo">{{serverErrors?.profile_photo[0]}}</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field class="!block col-span-3 md:col-span-2">
+                        <mat-label>Password</mat-label>
+                        <input formControlName="password" type="password" matInput placeholder="Enter Your Password">
+                        <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['password']?.touched && formControls?.['password']?.hasError('minlength')">Password Must Be Atleast 8 Characters Long</mat-hint>
+                        <mat-hint class="text-sm text-red-400" *ngIf="serverErrors?.password">{{serverErrors?.password[0]}}</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field class="!block col-span-3 md:col-span-2">
+                        <mat-label>Confirm Password</mat-label>
+                        <input formControlName="password_confirmation" type="password" matInput placeholder="Enter Your Password">
+                        <mat-hint class="text-sm text-red-400" *ngIf="registrationForm?.touched && registrationForm?.hasError('passwordMismatch')">Passwords do not match</mat-hint>
+                        <mat-hint class="text-sm text-red-400" *ngIf="serverErrors?.password_confirmation">{{serverErrors?.password_confirmation[0]}}</mat-hint>
+                    </mat-form-field>
+                    <button class="col-span-6 md:col-span-2 py-4 top-4" mat-raised-button color="primary">Register</button>
+                </div>
+            </form>
+        </mat-card-content>
+        <mat-card-actions class="flex mx-4 justify-between items-center font-semibold">
+            <a color="primary" class="hover:underline" routerLink="/auth/login">Already Signed Up?</a>
+        </mat-card-actions>
+    </mat-card>
+    </div>
+</div>

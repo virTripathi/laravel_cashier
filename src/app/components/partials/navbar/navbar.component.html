@@ -1,0 +1,12 @@
+<p>
+    <mat-toolbar color="primary">
+        <a class="absolute z-10" routerLink="">LetsCode</a>
+        <span class="example-spacer"></span>
+        <button *ngIf="$isAuthenticated" mat-icon-button (click)="viewProfile()" >
+            <mat-icon>account_circle</mat-icon>
+        </button>
+        <a routerLink="/auth/logout" *ngIf="$isAuthenticated" mat-icon-button>
+            <mat-icon>exit_to_app</mat-icon>
+        </a>
+    </mat-toolbar>
+  </p>

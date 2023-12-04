@@ -1,0 +1,32 @@
+<div class="absolute top-0 bottom-0 left-0 right-0 flex flex-col justify-center items-center m-4">
+    <div class="w-full md:w-3/6">
+    <mat-card>
+        <mat-card-header class="mb-4">
+            <mat-card-title>LOGIN</mat-card-title>
+            <mat-card-subtitle>Welcome Back To LetsCode</mat-card-subtitle>
+        </mat-card-header>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <mat-card-content class="mb-4">
+                <mat-form-field class="!block">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" type="email" matInput placeholder="Enter Your Registered Email">
+                    <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['email']?.touched && formControls?.['email']?.hasError('required')">Email is required</mat-hint>
+                    <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['email']?.touched && formControls?.['email']?.hasError('email')">Email Must Be A Valid Email</mat-hint>
+                    <mat-hint class="text-sm text-red-400" *ngIf="serverErrors?.email">{{serverErrors?.email[0]}}</mat-hint>
+                </mat-form-field>
+                <mat-form-field class="!block">
+                    <mat-label>Password</mat-label>
+                    <input formControlName="password" type="password" matInput placeholder="Enter Your Password">
+                    <mat-hint class="text-sm text-red-400" *ngIf="formControls?.['password']?.touched && formControls?.['password']?.hasError('minlength')">Password Must Be Atleast 8 Characters Long</mat-hint>
+                    <mat-hint class="text-sm text-red-400" *ngIf="serverErrors?.password">{{serverErrors?.password[0]}}</mat-hint>
+                </mat-form-field>
+                    <button class="float-right w-full md:w-48" mat-raised-button color="primary">Login</button>
+            </mat-card-content>
+        </form>
+        <mat-card-actions class="flex mx-4 justify-between items-center font-semibold">
+            <a color="primary" class="hover:underline" routerLink="/auth/forgot-password">Forgot Password? </a>
+            <a color="primary" class="hover:underline" routerLink="/auth/register">Didn't Signed Up Yet?</a>
+        </mat-card-actions>
+    </mat-card>
+    </div>
+</div>

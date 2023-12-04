@@ -1,0 +1,13 @@
+<section>
+    <div class="container mx-auto">
+        <header class="container mt-4">
+            <h1 class="text-center !text-bolder !text-4xl">LetsCode Plans And Pricing</h1>
+            <p class="text-center !text-bold text-lg text-gray-800">Choose A Subscription Plan That Best Suits Your Needs From The Options Below</p>    
+        </header>
+        <main class="mt-6">
+            <div class="container grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                <app-subscription-plan-card  *ngFor="let cardData of data" [cardData]="cardData"></app-subscription-plan-card>
+            </div>
+        </main>
+    </div>
+</section>

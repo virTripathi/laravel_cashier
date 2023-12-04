@@ -1,0 +1,40 @@
+<mat-card class="subscription-card">
+    <mat-card-header class="!block text-center">
+        <h3 class="block !text-3xl !text-bold text-center w-full">{{cardData.title}}</h3>
+        <h5 class="text-gray-600 !italic block text-center w-full !text-xl !text-bold">{{cardData.subtitle}}</h5>
+    </mat-card-header>
+    <hr class="border-4 border-purple-800 w-20 mx-auto" color="primary">
+    <mat-card-content class="!my-4">
+        
+        <h5 class="block text-center w-full !text-xl !text-bold">{{cardData.head1}}</h5>
+        <br>
+        <p class="flex justify-start items-center gap-2 px-6">
+            <mat-icon color="primary" class="!w-4 !h- !text-sm">check_circle</mat-icon>
+            {{cardData.feature1}}
+        </p>
+        <p class="flex justify-start items-center gap-2 px-6">
+            <mat-icon color="primary" class="!w-4 !h- !text-sm">check_circle</mat-icon>
+            {{cardData.feature2}}
+        </p>
+        <p class="flex justify-start items-center gap-2 px-6">
+            <mat-icon color="primary" class="!w-4 !h- !text-sm">check_circle</mat-icon>
+            {{cardData.feature3}}
+        </p>
+        <p class="flex justify-start items-center gap-2 px-6">
+            <mat-icon color="primary" class="!w-4 !h- !text-sm">check_circle</mat-icon>
+            {{cardData.feature4}}
+        </p>
+        <p class="flex justify-start items-center gap-2 px-6">
+            <mat-icon color="primary" class="!w-4 !h- !text-sm">check_circle</mat-icon>
+            {{cardData.feature5}}
+        </p>
+        <br>
+        <div class="flex flex-row justify-around">
+            <h3 class="line-through">₹{{cardData.originalPrice}}</h3>
+            <h3>₹{{cardData.discountedPrice}}</h3>
+        </div>
+        <hr>
+        <br>
+        <a href="http://localhost:8000/plan/{{cardData.id}}" class="w-full !text-white" mat-raised-button color="primary">Subscribe Now</a>
+    </mat-card-content>
+</mat-card>
